@@ -1,0 +1,131 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+<h2>{{ title }}</h2>
+<p style="margin-left: 40%;"> - By {{ name }}</p>
+<hr>
+<h4>Exercise 1: Of and From Observable Creation <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet:</b></p><pre class="prettyprint">   of(2,4,6,8).subscribe(item => console.log(item));</pre>
+<pre class="prettyprint"><code>
+     from([12, 24, 36, 48]).subscribe({{ '{' }}
+          next: (item) =&gt; console.log(`Resulting Item.. ${{ '{' }}item{{'}'}} `),
+          error: (err) =&gt; console.log(`Error Occured ${{ '{' }}err{{'}'}}`),
+          complete: () =&gt; console.log(`Over Go Home`)
+          {{'}'}});
+</code></pre>
+<hr>
+<h4>Exercise 2: Map,Tap and Take RxJS Operators <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    from([1, 2, 3, 4]).pipe(
+        tap(item =&gt; console.log(`Emitted Items.. ${{ '{' }}item{{'}'}}`)),
+        map(item =&gt; item * 2),
+        map(item =&gt; item - 8),
+        map( item =&gt; {{ '{' }}
+          if(item === 0){{ '{' }}throw new Error('Zero Detected'){{'}'}}
+          return item;
+          {{'}'}}),
+        take(3)
+      ).subscribe({{ '{' }}
+        next: (item) =&gt; console.log(`Resulting Item.. ${{ '{' }}item{{'}'}} `),
+        error: (err) =&gt; console.log(`Error Occured ${{ '{' }}err{{'}'}}`),
+        complete: () =&gt; console.log(`Over Go Home`)
+        {{'}'}});
+</code></pre>
+<hr>
+<h4>Exercise 3: catchError RxJS Operators <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    of(3,5,8).pipe(
+        map(i =&gt; {{ '{' }}
+          if(i === 8) {{ '{' }}
+            throw 'Error!';
+            {{'}'}}
+          return i;
+          {{'}'}}),
+        catchError(err =&gt; of('Error Caught : Eight'))
+      ).subscribe({{ '{' }}
+        next: x =&gt; console.log(x),
+        error: err =&gt; console.log(`Error Caught ${{ '{' }}err{{'}'}}`)
+        {{'}'}});
+</code></pre>
+<hr>
+<h4>Exercise 4: combineLatest RxJS Operators - I <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    const weight = of(70, 72, 76, 79, 75);
+    const height = of(1.76, 1.77, 1.78);
+    const bmi = combineLatest([weight, height]).pipe(
+                 map(([w, h]) =&gt; w / (h * h)),
+                  );
+          bmi.subscribe(x =&gt; console.log('BMI is ' + x));
+</code></pre>
+<hr>
+<h4>Exercise 5: Observable: unicast <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    const numberObserve = of(2,4,6);
+    numberObserve.subscribe(x =&gt; console.log('A', x))
+    numberObserve.subscribe(x =&gt; console.log('B', x))
+</code></pre>
+<hr>
+<h4>Exercise 6: Subject: multicast <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    const numberSubject = new Subject&lt;number&gt;();
+      numberSubject.subscribe(x =&gt; console.log('A', x))
+      numberSubject.next(2);
+      numberSubject.subscribe(x =&gt; console.log('B', x))
+      numberSubject.next(4);
+      numberSubject.next(6);
+      numberSubject.complete();
+</code></pre>
+<hr>
+<h4>Exercise 7: Behaviour Subject <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    const numberBehaviourSubject = new BehaviorSubject&lt;number&gt;(0);
+      numberBehaviourSubject.subscribe(x =&gt; console.log('A', x))
+      numberBehaviourSubject.next(2);
+      numberBehaviourSubject.subscribe(x =&gt; console.log('B', x))
+      numberBehaviourSubject.next(4);
+      numberBehaviourSubject.next(6);
+      numberBehaviourSubject.complete();
+</code></pre>
+<hr>
+<h4>Exercise 8: Scan operator <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    of(2,5,9)
+         .pipe(
+           scan((acc,curr) =&gt; acc + curr)
+         )
+         .subscribe(x =&gt; console.log(x));
+</code></pre>
+<hr>
+<h4>Exercise 9: Scan operator | Array Example <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+    of(2,5,9)
+    .pipe(
+      scan((acc,curr) =&gt; [...acc, curr] , [] as number[])
+    )
+    .subscribe(x =&gt; console.log(x));
+</code></pre>
+<hr>
+<h4>Exercise 10: delay startWith RxJS Operators - I <br> <p>Please view console for outputs</p></h4>
+<p><b>Snippet: </b></p>
+<pre class="prettyprint"><code>
+const observables = [1, 5, 10].map(
+    n =&gt; of(n).pipe( delay(0), startWith(0)));
+const combined = combineLatest(observables);
+combined.subscribe(value =&gt; console.log(value));  
+</code></pre>
+<hr>
+<h4>Example For Angular Bindings Basics</h4>
+<!-- <app-servers></app-servers> -->
+<div class='app-servers'></div>
+       </div>
+       <app-servers></app-servers>
+    </div>
+</div>
